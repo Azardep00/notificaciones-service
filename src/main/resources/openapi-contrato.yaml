@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: Microservicio de Notificaciones — Tamales y Lechona
+  description: >
+    Servicio independiente que recibe eventos de cambio de estado de pedidos
+    desde el backend principal (Distribuidoras-Tamales-y-Lechona) y simula
+    el envio de una notificacion al cliente. Se comunica via REST sincrono
+    (RestClient desde el backend principal).
+  version: "1.0.0"
+paths:
+  /notificaciones/pedido:
+    post:
+      summary: Notifica un cambio de estado de un pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [idPedido, correoCliente, estadoNuevo]
+              properties:
+                idPedido:
+                  type: integer
+                  example: 42
+                correoCliente:
+                  type: string
+                  example: cliente@correo.com
+                estadoNuevo:
+                  type: string
+                  example: CONFIRMADO
+      responses:
+        "200":
+          description: Notificacion procesada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  enviado:
+                    type: boolean
+                  mensaje:
+                    type: string
+        "400":
+          description: Datos invalidos en la solicitud
