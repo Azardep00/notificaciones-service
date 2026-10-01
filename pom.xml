@@ -36,6 +36,13 @@
             <version>2.6.0</version>
         </dependency>
 
+        <!-- Mensajeria asincrona con Kafka (rama feature/kafka).
+             La version la hereda del spring-boot-starter-parent. -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
