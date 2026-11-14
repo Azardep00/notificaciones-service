@@ -20,8 +20,8 @@ paths:
               required: [idPedido, correoCliente, estadoNuevo]
               properties:
                 idPedido:
-                  type: integer
-                  example: 42
+                  type: string
+                  example: "6740f1c2a9b3d4e5f6a7b8d0"
                 correoCliente:
                   type: string
                   example: cliente@correo.com

@@ -10,7 +10,7 @@ public class Notificacion {
 
     @Id
     private String id;
-    private Integer idPedido;
+    private String idPedido;
     private String correoCliente;
     private String estadoNuevo;
     private String canal;
@@ -18,7 +18,7 @@ public class Notificacion {
 
     public Notificacion() {}
 
-    public Notificacion(Integer idPedido, String correoCliente, String estadoNuevo, String canal) {
+    public Notificacion(String idPedido, String correoCliente, String estadoNuevo, String canal) {
         this.idPedido = idPedido;
         this.correoCliente = correoCliente;
         this.estadoNuevo = estadoNuevo;
@@ -27,7 +27,7 @@ public class Notificacion {
     }
 
     public String getId() { return id; }
-    public Integer getIdPedido() { return idPedido; }
+    public String getIdPedido() { return idPedido; }
     public String getCorreoCliente() { return correoCliente; }
     public void setCorreoCliente(String correoCliente) { this.correoCliente = correoCliente; }
     public String getEstadoNuevo() { return estadoNuevo; }

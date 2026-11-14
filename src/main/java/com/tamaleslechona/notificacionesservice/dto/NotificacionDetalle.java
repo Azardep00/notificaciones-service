@@ -7,7 +7,7 @@ import com.tamaleslechona.notificacionesservice.model.Notificacion;
 // Lo que devuelve el API al consultar notificaciones guardadas.
 public record NotificacionDetalle(
         String id,
-        Integer idPedido,
+        String idPedido,
         String correoCliente,
         String estadoNuevo,
         String canal,

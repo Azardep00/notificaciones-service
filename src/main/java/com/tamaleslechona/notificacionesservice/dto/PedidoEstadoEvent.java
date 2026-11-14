@@ -6,7 +6,7 @@ import java.time.Instant;
 // campos (mismos nombres) que com.tamaleslechona.tamaleslechona.event.PedidoEstadoEvent,
 // porque viaja como JSON por el topico.
 public record PedidoEstadoEvent(
-        Integer idPedido,
+        String idPedido,
         String correoCliente,
         String estadoNuevo,
         Instant ocurridoEn) {

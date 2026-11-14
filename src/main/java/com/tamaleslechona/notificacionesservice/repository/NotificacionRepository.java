@@ -8,9 +8,9 @@ import com.tamaleslechona.notificacionesservice.model.Notificacion;
 
 public interface NotificacionRepository extends MongoRepository<Notificacion, String> {
 
-    List<Notificacion> findByIdPedido(Integer idPedido);
+    List<Notificacion> findByIdPedido(String idPedido);
 
     List<Notificacion> findByCorreoCliente(String correoCliente);
 
-    List<Notificacion> findByIdPedidoAndCorreoCliente(Integer idPedido, String correoCliente);
+    List<Notificacion> findByIdPedidoAndCorreoCliente(String idPedido, String correoCliente);
 }

@@ -19,11 +19,11 @@ public class NotificacionService {
         this.repo = repo;
     }
 
-    public Notificacion registrar(Integer idPedido, String correoCliente, String estadoNuevo, String canal) {
+    public Notificacion registrar(String idPedido, String correoCliente, String estadoNuevo, String canal) {
         return repo.save(new Notificacion(idPedido, correoCliente, estadoNuevo, canal));
     }
 
-    public List<Notificacion> listar(Integer idPedido, String correoCliente) {
+    public List<Notificacion> listar(String idPedido, String correoCliente) {
         if (idPedido != null && correoCliente != null) {
             return repo.findByIdPedidoAndCorreoCliente(idPedido, correoCliente);
         }
