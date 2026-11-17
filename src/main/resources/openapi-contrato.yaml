@@ -3,11 +3,81 @@ info:
   title: Microservicio de Notificaciones — Tamales y Lechona
   description: >
     Servicio independiente que recibe eventos de cambio de estado de pedidos
-    desde el backend principal (Distribuidoras-Tamales-y-Lechona) y simula
-    el envio de una notificacion al cliente. Se comunica via REST sincrono
-    (RestClient desde el backend principal).
-  version: "1.0.0"
+    desde el backend principal (Distribuidoras-Tamales-y-Lechona) y guarda
+    una notificacion en MongoDB (simula el envio al cliente). Llega por REST
+    sincrono (RestClient desde el backend principal) o por Kafka. Los ids son
+    texto (ObjectId de Mongo).
+  version: "2.0.0"
+components:
+  schemas:
+    NotificacionDetalle:
+      type: object
+      properties:
+        id: {type: string, example: "6740f1c2a9b3d4e5f6a7b8e1"}
+        idPedido: {type: string, example: "6740f1c2a9b3d4e5f6a7b8d0"}
+        correoCliente: {type: string, example: cliente@correo.com}
+        estadoNuevo: {type: string, example: CONFIRMADO}
+        canal: {type: string, enum: [REST, KAFKA]}
+        enviadaEn: {type: string, format: date-time}
+    NotificacionUpdate:
+      type: object
+      required: [correoCliente, estadoNuevo]
+      properties:
+        correoCliente: {type: string, format: email, example: laura@example.com}
+        estadoNuevo: {type: string, example: EN_PREPARACION}
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: {type: string}
 paths:
+  /notificaciones:
+    get:
+      summary: Lista notificaciones (filtros opcionales)
+      parameters:
+        - {name: idPedido, in: query, required: false, schema: {type: string}}
+        - {name: correoCliente, in: query, required: false, schema: {type: string}}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/NotificacionDetalle'}
+  /notificaciones/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: Busca una notificacion por id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/NotificacionDetalle'}
+        "404": {description: No encontrada}
+    put:
+      summary: Corrige el correo o el estado de una notificacion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/NotificacionUpdate'}
+      responses:
+        "200":
+          description: Actualizada
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/NotificacionDetalle'}
+        "400": {description: Datos invalidos}
+        "404": {description: No encontrada}
+    delete:
+      summary: Elimina la notificacion (borrado fisico de MongoDB)
+      responses:
+        "204": {description: Eliminada}
+        "404": {description: No encontrada}
   /notificaciones/pedido:
     post:
       summary: Notifica un cambio de estado de un pedido
